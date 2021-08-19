@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 16px 0px;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.card-info_on {
+  width: 25px;
+  height: 25px;
+  background-color: green;
+  border-radius: 50%;
+}
+
+.card-info_off {
+  width: 25px;
+  height: 25px;
+  background-color: red;
+  border-radius: 50%;
+}

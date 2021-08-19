@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Component } from "react";
+import { FormComponent, ListComponent } from "./components";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  //function App() {
+  state = {
+    userList: [
+      {
+        userName: "Clarissa",
+        userLastName: "Mascalchi",
+        status: true,
+      },
+      {
+        userName: "Minnie",
+        userLastName: "Topolino",
+        status: false,
+      },
+      {
+        userName: "paperino",
+        userLastName: "qui",
+        status: true,
+      },
+    ],
+  };
+
+  addUserHandler = (formValues, status) => {
+    console.log("adding user...");
+    this.setState((prevState, prevProps) => {
+      const newList = [...prevState.userList];
+      newList.push({
+        userName: formValues.firstName,
+        userLastName: formValues.lastName,
+        status: status,
+      });
+
+      return {
+        userList: newList,
+      };
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <FormComponent addUser={this.addUserHandler} />
+        <ListComponent infoUsers={this.state.userList} />
+      </div>
+    );
+  }
 }
 
 export default App;

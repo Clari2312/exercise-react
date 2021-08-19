@@ -1,0 +1,57 @@
+.form {
+  background-color: gray;
+  width: 50%;
+  padding: 15px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 11px;
+}
+
+.form-input label {
+  width: 30%;
+}
+
+.form-input input {
+  width: 70%;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.form-actions_off {
+  background-color: red;
+}
+
+.form-actions_on {
+  background-color: green;
+}
+
+/* selettore di id
+#form {}
+
+/* selettore di classe */
+/* .form {} */
+
+/* selettore di figli */
+/* <ul id="lista">
+  <li>pippo
+    <li>pippogoofy</li>
+  </li>
+  <li>pluto</li>
+</ul> */
+
+/*selettori adiacenti*/
+/* <h1>ciao</h1>
+<p>pippo e pluto</p> */
+
+/* h1+p {} adiacente */
+
+/* css -->  */
+/* #lista li {} /* Prende tutti/ */
+/* #lista>li {} Prende solo pippo e pluto   */
