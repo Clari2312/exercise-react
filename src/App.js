@@ -6,32 +6,29 @@ import { FormComponent, ListComponent } from "./components";
 class App extends Component {
   //function App() {
   state = {
-    userList: [
-      {
-        userName: "Clarissa",
-        userLastName: "Mascalchi",
-        status: true,
-      },
-      {
-        userName: "Minnie",
-        userLastName: "Topolino",
-        status: false,
-      },
-      {
-        userName: "paperino",
-        userLastName: "qui",
-        status: true,
-      },
-    ],
+    userList: [],
   };
 
-  addUserHandler = (formValues, status) => {
+  removeUserHandler = (index) => {
+    console.log("Remove user...");
+    this.setState((prevState, prevProps) => {
+      const newUserList = [...prevState.userList];
+      newUserList.splice(index, 1);
+      return {
+        userList: newUserList,
+      };
+    });
+  };
+
+  // addUserHandler = (formValues, status) => {
+  addUserHandler = ({ firstName, lastName }, status) => {
     console.log("adding user...");
+    //const { firstName, lastName } = formValues;
     this.setState((prevState, prevProps) => {
       const newList = [...prevState.userList];
       newList.push({
-        userName: formValues.firstName,
-        userLastName: formValues.lastName,
+        userName: firstName,
+        userLastName: lastName,
         status: status,
       });
 
@@ -45,7 +42,10 @@ class App extends Component {
     return (
       <div className="App">
         <FormComponent addUser={this.addUserHandler} />
-        <ListComponent infoUsers={this.state.userList} />
+        <ListComponent
+          infoUsers={this.state.userList}
+          removeUser={this.removeUserHandler}
+        />
       </div>
     );
   }

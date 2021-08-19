@@ -3,8 +3,9 @@ import "./Card.css";
 
 class Card extends Component {
   render() {
-    console.log("props: ", this.props);
+    console.log("props card: ", this.props);
     const { userName, userLastName, status } = this.props.infoUser;
+    const { positionIndex } = this.props;
     return (
       <div className="card">
         <div className="card-info">
@@ -14,7 +15,13 @@ class Card extends Component {
         </div>
         <div className="card-actions">
           <button>Edit</button>
-          <button>Remove</button>
+          <button
+            onClick={() => {
+              this.props.removeUser(positionIndex);
+            }}
+          >
+            Remove
+          </button>
         </div>
       </div>
     );
