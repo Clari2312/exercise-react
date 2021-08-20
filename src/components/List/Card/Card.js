@@ -5,7 +5,7 @@ class Card extends Component {
   render() {
     console.log("props card: ", this.props);
     const { userName, userLastName, status } = this.props.infoUser;
-    const { positionIndex } = this.props;
+    const { positionIndex, editEvent } = this.props;
     return (
       <div className="card">
         <div className="card-info">
@@ -14,7 +14,13 @@ class Card extends Component {
           <div className={status ? "card-info_on" : "card-info_off"}></div>
         </div>
         <div className="card-actions">
-          <button>Edit</button>
+          <button
+            onClick={() =>
+              editEvent(userName, userLastName, status, positionIndex)
+            }
+          >
+            Edit
+          </button>
           <button
             onClick={() => {
               this.props.removeUser(positionIndex);

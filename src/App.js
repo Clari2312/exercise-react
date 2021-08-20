@@ -6,7 +6,13 @@ import { FormComponent, ListComponent } from "./components";
 class App extends Component {
   //function App() {
   state = {
-    userList: [],
+    userList: [
+      {
+        userName: "Clarissa",
+        userLastName: "Mascalchi",
+        status: true,
+      },
+    ],
   };
 
   removeUserHandler = (index) => {
@@ -38,11 +44,27 @@ class App extends Component {
     });
   };
 
+  editUserHandler = (newUserInfo, status, userIndex) => {
+    console.log("newUserInfo ", newUserInfo);
+    console.log("status ", status);
+    console.log("userIndex ", userIndex);
+    let newList = [...this.state.userList];
+    newList[userIndex] = {
+      userName: newUserInfo.firstName,
+      userLastName: newUserInfo.lastName,
+      status: status,
+    };
+    this.setState({
+      userList: newList,
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <FormComponent addUser={this.addUserHandler} />
         <ListComponent
+          editUser={this.editUserHandler}
           infoUsers={this.state.userList}
           removeUser={this.removeUserHandler}
         />
