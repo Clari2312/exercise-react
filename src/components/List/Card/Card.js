@@ -36,7 +36,7 @@ import "./Card.css";
 
 // export default Card;
 
-// function Card() { }
+// function Card(props) { }
 const Card = (props) => {
   // class Card extends Component {
   // render() {
