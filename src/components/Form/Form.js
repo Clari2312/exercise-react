@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { Component, useState, useEffect } from "react";
 import "./Form.css";
 
 // class Form extends Component
@@ -26,6 +26,31 @@ const Form = (props) => {
   //     });
   //   }
   // }
+
+  // const inEdit = props.inEdit
+  // const userInfo = props.userInfo
+  //destructuring
+  //1. devo usare let o const?
+  //2. che tipo di variabile è quello che sto destrutturando? (in questo caso props è un oggetto quindi uso {})
+  //3. assegno mettendo = e la variabile che sto destrutturando
+  //4. all'interno delle {} scrivo le proprietà che voglio prendere dalla variabile che sto destrutturando
+
+  // const { inEdit, userInfo } = props;
+  // let {userInfo} = props
+  // const {inEdit} = props
+
+  const { disableEvent, inEdit, userInfo, editUser } = props;
+
+  useEffect(() => {
+    if (inEdit) {
+      setFormState({
+        firstName: userInfo.userName,
+        lastName: userInfo.userLastName,
+      });
+    }
+  }, [inEdit, userInfo]);
+
+  //non si può mettere le props (quindi le proprietà di un oggetto) come dipendenza nell'array
 
   const resetInputValueHandler = () => {
     const inputName = document.getElementById("form-input_name");
@@ -58,7 +83,7 @@ const Form = (props) => {
 
   // render() {
   console.log("form props: ", props);
-  const { disableEvent, inEdit, userInfo, editUser } = props;
+  // const { disableEvent, inEdit, userInfo, editUser } = props;
 
   return (
     <div className="form" style={{ width: inEdit ? "100%" : "50%" }}>
