@@ -1,4 +1,4 @@
-import { Component, useState, useEffect } from "react";
+import { Component, useState, useEffect, useRef, memo } from "react";
 import "./Form.css";
 
 // class Form extends Component
@@ -9,11 +9,15 @@ const Form = (props) => {
   //     lastName: "",
   //   },
   // };
+  // const count = useRef(0)
 
-  const [formState, setFormState] = useState({
-    firstName: "",
-    lastName: "",
-  });
+  // const [formState, setFormState] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  // });
+
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
 
   // componentDidMount() {
   //   console.log("pippo ", this.props);
@@ -41,45 +45,48 @@ const Form = (props) => {
 
   const { disableEvent, inEdit, userInfo, editUser } = props;
 
-  useEffect(() => {
-    if (inEdit) {
-      setFormState({
-        firstName: userInfo.userName,
-        lastName: userInfo.userLastName,
-      });
-    }
-  }, [inEdit, userInfo]);
+  // useEffect(() => {
+  //   console.log("firstNameRef al did mount", firstNameRef);
+  //   if (inEdit) {
+  //     // setFormState({
+  //     //   firstName: userInfo.userName,
+  //     //   lastName: userInfo.userLastName,
+  //     // });
+  //   }
+  // }, [inEdit, userInfo]);
+
+  console.log("firstNameRef ", firstNameRef);
 
   //non si può mettere le props (quindi le proprietà di un oggetto) come dipendenza nell'array
 
-  const resetInputValueHandler = () => {
-    const inputName = document.getElementById("form-input_name");
-    const inputLastName = document.getElementById("form-input_lastname");
-    inputName.value = "";
-    inputLastName.value = "";
-  };
+  // const resetInputValueHandler = () => {
+  //   const inputName = document.getElementById("form-input_name");
+  //   const inputLastName = document.getElementById("form-input_lastname");
+  //   inputName.value = "";
+  //   inputLastName.value = "";
+  // };
 
   // inputFirstNameHandler = (event) => {
-  const inputFirstNameHandler = (event) => {
-    // console.log("event: ", event.target.value);
-    setFormState((prevState, prevProps) => {
-      return {
-        firstName: event.target.value,
-        lastName: prevState.lastName,
-      };
-    });
-  };
+  // const inputFirstNameHandler = (event) => {
+  //   // console.log("event: ", event.target.value);
+  //   setFormState((prevState, prevProps) => {
+  //     return {
+  //       firstName: event.target.value,
+  //       lastName: prevState.lastName,
+  //     };
+  //   });
+  // };
 
   // inputLastNameHandler (event) {
-  const inputLastNameHandler = (event) => {
-    // console.log("event: ", event.target.value);
-    setFormState((prevState, prevProps) => {
-      return {
-        firstName: prevState.firstName,
-        lastName: event.target.value,
-      };
-    });
-  };
+  // const inputLastNameHandler = (event) => {
+  //   // console.log("event: ", event.target.value);
+  //   setFormState((prevState, prevProps) => {
+  //     return {
+  //       firstName: prevState.firstName,
+  //       lastName: event.target.value,
+  //     };
+  //   });
+  // };
 
   // render() {
   console.log("form props: ", props);
@@ -92,8 +99,9 @@ const Form = (props) => {
           <label>Name:</label>
           <input
             id="form-input_name"
+            ref={firstNameRef}
             type="text"
-            onChange={(e) => inputFirstNameHandler(e)}
+            // onChange={(e) => inputFirstNameHandler(e)}
             defaultValue={inEdit ? userInfo.userName : ""}
           ></input>
         </div>
@@ -101,8 +109,9 @@ const Form = (props) => {
           <label>LastName:</label>
           <input
             id="form-input_lastname"
+            ref={lastNameRef}
             type="text"
-            onChange={(e) => inputLastNameHandler(e)}
+            // onChange={(e) => inputLastNameHandler(e)}
             defaultValue={inEdit ? userInfo.userLastName : ""}
           ></input>
         </div>
@@ -111,17 +120,34 @@ const Form = (props) => {
             className="form-actions_off"
             onClick={(e) => {
               e.preventDefault();
-
+              console.log("firstNameRef al click", firstNameRef.current.value);
               if (inEdit) {
-                editUser(formState, false, userInfo.index);
+                // editUser(formState, false, userInfo.index);
+                editUser(
+                  {
+                    firstName: firstNameRef.current.value,
+                    lastName: lastNameRef.current.value,
+                  },
+                  false,
+                  userInfo.index
+                );
                 disableEvent();
               } else {
-                setFormState({
-                  firstName: "",
-                  lastName: "",
-                });
-                resetInputValueHandler();
-                props.addUser(formState, false);
+                // setFormState({
+                //   firstName: "",
+                //   lastName: "",
+                // });
+
+                // resetInputValueHandler();
+                props.addUser(
+                  {
+                    firstName: firstNameRef.current.value,
+                    lastName: lastNameRef.current.value,
+                  },
+                  false
+                );
+                firstNameRef.current.value = "";
+                lastNameRef.current.value = "";
               }
             }}
           >
@@ -132,15 +158,31 @@ const Form = (props) => {
             onClick={(e) => {
               e.preventDefault();
               if (inEdit) {
-                editUser(formState, true, userInfo.index);
+                editUser(
+                  {
+                    firstName: firstNameRef.current.value,
+                    lastName: lastNameRef.current.value,
+                  },
+                  true,
+                  userInfo.index
+                );
                 disableEvent();
               } else {
-                setFormState({
-                  firstName: "",
-                  lastName: "",
-                });
-                resetInputValueHandler();
-                props.addUser(formState, true);
+                // setFormState({
+                //   firstName: "",
+                //   lastName: "",
+                // });
+
+                // resetInputValueHandler();
+                props.addUser(
+                  {
+                    firstName: firstNameRef.current.value,
+                    lastName: lastNameRef.current.value,
+                  },
+                  true
+                );
+                firstNameRef.current.value = "";
+                lastNameRef.current.value = "";
               }
             }}
           >
