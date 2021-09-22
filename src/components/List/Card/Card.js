@@ -3,21 +3,26 @@ import "./Card.css";
 import { Typography, Avatar, Stack, Button, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
-  pippo: {
-    width: "25px !important",
-    height: "25px !important",
-  },
-  itemButton: {
-    width: "30%",
-    justifyContent: "space-around",
-    padding: "10px",
-  },
-  itemInfo: {
-    justifyContent: "space-around",
-    width: "70%",
-    padding: "10px",
-  },
+import EditButton from "./EditButton/EditButton";
+import RemoveButton from "./RemoveButton/RemoveButton";
+
+const useStyles = makeStyles((theme) => {
+  return {
+    pippo: {
+      width: "25px !important",
+      height: "25px !important",
+    },
+    itemButton: {
+      width: "30%",
+      justifyContent: "space-around",
+      padding: "10px",
+    },
+    itemInfo: {
+      justifyContent: "space-around",
+      width: "70%",
+      padding: "10px",
+    },
+  };
 });
 
 // class Card extends Component {
@@ -78,22 +83,14 @@ const Card = (props) => {
           </Avatar>
         </Stack>
         <Stack direction="column" spacing={1} className={classes.itemButton}>
-          <Button
-            variant="outlined"
-            onClick={() =>
-              editEvent(userName, userLastName, status, positionIndex)
-            }
-          >
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              removeUser(positionIndex);
-            }}
-          >
-            Remove
-          </Button>
+          <EditButton
+            editEvent={editEvent}
+            userName={userName}
+            userLastName={userLastName}
+            status={status}
+            positionIndex={positionIndex}
+          />
+          <RemoveButton removeUser={removeUser} positionIndex={positionIndex} />
         </Stack>
       </Stack>
     </Paper>
