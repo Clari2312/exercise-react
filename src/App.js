@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Component, useState } from "react";
 import { FormComponent, ListComponent } from "./components";
+import { Stack } from "@mui/material";
 
 // class App extends Component
 const App = (props) => {
@@ -63,14 +64,14 @@ const App = (props) => {
 
   // render() {
   return (
-    <div className="App">
+    <Stack direction="row">
       <FormComponent addUser={addUserHandler} />
       <ListComponent
         editUser={editUserHandler}
         infoUsers={userList}
         removeUser={removeUserHandler}
       />
-    </div>
+    </Stack>
   );
   // }
 };

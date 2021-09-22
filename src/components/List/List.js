@@ -2,6 +2,7 @@ import { Component, useState } from "react";
 import "./List.css";
 import FormComponent from "../Form/Form";
 import Card from "./Card/Card";
+import { Box } from "@mui/material";
 
 const List = (props) => {
   // class List extends Component {
@@ -95,20 +96,19 @@ const List = (props) => {
   });
 
   return (
-    <div className="list">
-      {/* {this.state.onEdit ? ( */}
+    // <div className="list">
+    <Box sx={{ width: "50%", padding: "15px" }}>
       {listState.onEdit ? (
         <FormComponent
           inEdit={true}
           editUser={editUser}
-          // disableEvent={this.disableEditHandler}
           disableEvent={disableEditHandler}
-          // userInfo={this.state.userInfoOnEdit}
           userInfo={listState.userInfoOnEdit}
         />
       ) : null}
       {cardList}
-    </div>
+      {/* // </div> */}
+    </Box>
   );
   // }
 };

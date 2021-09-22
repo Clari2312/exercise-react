@@ -1,5 +1,7 @@
 import { Component, useState, useEffect, useRef, memo } from "react";
 import "./Form.css";
+import { TextField, Button, Stack, Box } from "@mui/material";
+import { minHeight } from "@mui/system";
 
 // class Form extends Component
 const Form = (props) => {
@@ -93,116 +95,96 @@ const Form = (props) => {
   // const { disableEvent, inEdit, userInfo, editUser } = props;
 
   return (
-    <div className="form" style={{ width: inEdit ? "100%" : "50%" }}>
-      <form>
-        <div className="form-input">
-          <label>Name:</label>
-          <input
-            id="form-input_name"
-            ref={firstNameRef}
-            type="text"
-            // onChange={(e) => inputFirstNameHandler(e)}
+    <Box sx={{ width: inEdit ? "100%" : "50%", padding: "20px" }}>
+      <Box component="form">
+        <Stack direction="column" sx={{ minHeight: "200px" }} spacing={3}>
+          <TextField
+            label="Name"
+            variant="standard"
+            inputRef={firstNameRef}
             defaultValue={inEdit ? userInfo.userName : ""}
-          ></input>
-        </div>
-        <div className="form-input">
-          <label>LastName:</label>
-          <input
-            id="form-input_lastname"
-            ref={lastNameRef}
-            type="text"
-            // onChange={(e) => inputLastNameHandler(e)}
+          />
+          <TextField
+            label="Lastname"
+            variant="standard"
+            inputRef={lastNameRef}
             defaultValue={inEdit ? userInfo.userLastName : ""}
-          ></input>
-        </div>
-        <div className="form-actions">
-          <button
-            className="form-actions_off"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log("firstNameRef al click", firstNameRef.current.value);
-              if (inEdit) {
-                // editUser(formState, false, userInfo.index);
-                editUser(
-                  {
-                    firstName: firstNameRef.current.value,
-                    lastName: lastNameRef.current.value,
-                  },
-                  false,
-                  userInfo.index
-                );
-                disableEvent();
-              } else {
-                // setFormState({
-                //   firstName: "",
-                //   lastName: "",
-                // });
-
-                // resetInputValueHandler();
-                props.addUser(
-                  {
-                    firstName: firstNameRef.current.value,
-                    lastName: lastNameRef.current.value,
-                  },
-                  false
-                );
-                firstNameRef.current.value = "";
-                lastNameRef.current.value = "";
-              }
-            }}
-          >
-            Offline
-          </button>
-          <button
-            className="form-actions_on"
-            onClick={(e) => {
-              e.preventDefault();
-              if (inEdit) {
-                editUser(
-                  {
-                    firstName: firstNameRef.current.value,
-                    lastName: lastNameRef.current.value,
-                  },
-                  true,
-                  userInfo.index
-                );
-                disableEvent();
-              } else {
-                // setFormState({
-                //   firstName: "",
-                //   lastName: "",
-                // });
-
-                // resetInputValueHandler();
-                props.addUser(
-                  {
-                    firstName: firstNameRef.current.value,
-                    lastName: lastNameRef.current.value,
-                  },
-                  true
-                );
-                firstNameRef.current.value = "";
-                lastNameRef.current.value = "";
-              }
-            }}
-          >
-            Online
-          </button>
-          {inEdit ? (
-            <button
+          />
+          <Stack direction="row" spacing={5}>
+            <Button
+              variant="contained"
+              color="error"
               onClick={(e) => {
-                e.preventDefault();
-                disableEvent();
+                if (inEdit) {
+                  editUser(
+                    {
+                      firstName: firstNameRef.current.value,
+                      lastName: lastNameRef.current.value,
+                    },
+                    false,
+                    userInfo.index
+                  );
+                  disableEvent();
+                } else {
+                  props.addUser(
+                    {
+                      firstName: firstNameRef.current.value,
+                      lastName: lastNameRef.current.value,
+                    },
+                    false
+                  );
+                  firstNameRef.current.value = "";
+                  lastNameRef.current.value = "";
+                }
               }}
             >
-              Cancel
-            </button>
-          ) : null}
-        </div>
-      </form>
-    </div>
+              Offline
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={(e) => {
+                if (inEdit) {
+                  editUser(
+                    {
+                      firstName: firstNameRef.current.value,
+                      lastName: lastNameRef.current.value,
+                    },
+                    true,
+                    userInfo.index
+                  );
+                  disableEvent();
+                } else {
+                  props.addUser(
+                    {
+                      firstName: firstNameRef.current.value,
+                      lastName: lastNameRef.current.value,
+                    },
+                    true
+                  );
+                  firstNameRef.current.value = "";
+                  lastNameRef.current.value = "";
+                }
+              }}
+            >
+              Online
+            </Button>
+            {inEdit ? (
+              <Button
+                variant="contained"
+                color="info"
+                onClick={(e) => {
+                  disableEvent();
+                }}
+              >
+                Cancel
+              </Button>
+            ) : null}
+          </Stack>
+        </Stack>
+      </Box>
+    </Box>
   );
 };
-// }
 
 export default Form;
